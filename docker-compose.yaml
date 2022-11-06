@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  server1:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: server
+    networks:
+      - backend-net
+  
+  reverse-proxy:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: reverse-proxy
+    ports:
+      - 8000:8000
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    name: backend-net
